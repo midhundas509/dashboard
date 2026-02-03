@@ -8,6 +8,7 @@ import { ViewToggle } from './components/ViewToggle';
 import { Pagination } from './components/Pagination';
 import { ProductList } from './components/ProductList';
 import { AddProductDialog } from './components/AddProductDialog';
+import { DashboardLayout } from '@/components/DashboardLayout';
 import { Loader2 } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 8;
@@ -86,79 +87,85 @@ export default function ProductsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                    <p className="text-muted-foreground">Loading products...</p>
+            <DashboardLayout>
+                <div className="flex items-center justify-center h-[calc(100vh-3.5rem)]">
+                    <div className="flex flex-col items-center gap-4">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        <p className="text-muted-foreground">Loading products...</p>
+                    </div>
                 </div>
-            </div>
+            </DashboardLayout>
         );
     }
 
     if (error) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="text-center">
-                    <h2 className="text-xl font-semibold text-destructive mb-2">Error</h2>
-                    <p className="text-muted-foreground">{error}</p>
+            <DashboardLayout>
+                <div className="flex items-center justify-center h-[calc(100vh-3.5rem)]">
+                    <div className="text-center">
+                        <h2 className="text-xl font-semibold text-destructive mb-2">Error</h2>
+                        <p className="text-muted-foreground">{error}</p>
+                    </div>
                 </div>
-            </div>
+            </DashboardLayout>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <header className="bg-white border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                        <div>
-                            <div className="text-xs text-muted-foreground mb-1">
-                                Dashboard &gt; Products
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded bg-blue-100 flex items-center justify-center">
-                                    📦
+        <DashboardLayout>
+            <div className="bg-gray-50 min-h-[calc(100vh-3.5rem)]">
+                {/* Header */}
+                <header className="bg-white border-b">
+                    <div className="px-4 sm:px-6 py-4">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <div>
+                                <div className="text-xs text-muted-foreground mb-1">
+                                    Dashboard &gt; Products
                                 </div>
-                                <h1 className="text-xl font-bold">Product Catalog</h1>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded bg-blue-100 flex items-center justify-center">
+                                        📦
+                                    </div>
+                                    <h1 className="text-xl font-bold">Product Catalog</h1>
+                                </div>
                             </div>
+                            <AddProductDialog categories={categories} onAddProduct={handleAddProduct} />
                         </div>
-                        <AddProductDialog categories={categories} onAddProduct={handleAddProduct} />
+                    </div>
+                </header>
+
+                {/* View Toggle Tabs */}
+                <div className="bg-white border-b">
+                    <div className="px-4 sm:px-6">
+                        <ViewToggle view={viewMode} onChange={setViewMode} />
                     </div>
                 </div>
-            </header>
 
-            {/* View Toggle Tabs */}
-            <div className="bg-white border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                    <ViewToggle view={viewMode} onChange={setViewMode} />
-                </div>
-            </div>
-
-            {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-                {/* Toolbar */}
-                <div className="bg-white rounded-lg border p-4 mb-4">
-                    <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                            <SearchInput value={searchQuery} onChange={setSearchQuery} />
-                            <CategoryFilter
-                                categories={categories}
-                                value={selectedCategory}
-                                onChange={setSelectedCategory}
+                {/* Main Content */}
+                <main className="px-4 sm:px-6 py-4 sm:py-6">
+                    {/* Toolbar */}
+                    <div className="bg-white rounded-lg border p-4 mb-4">
+                        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                                <SearchInput value={searchQuery} onChange={setSearchQuery} />
+                                <CategoryFilter
+                                    categories={categories}
+                                    value={selectedCategory}
+                                    onChange={setSelectedCategory}
+                                />
+                            </div>
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={setCurrentPage}
                             />
                         </div>
-                        <Pagination
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={setCurrentPage}
-                        />
                     </div>
-                </div>
 
-                {/* Product List */}
-                <ProductList products={paginatedProducts} viewMode={viewMode} />
-            </main>
-        </div>
+                    {/* Product List */}
+                    <ProductList products={paginatedProducts} viewMode={viewMode} />
+                </main>
+            </div>
+        </DashboardLayout>
     );
 }
