@@ -3,14 +3,13 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -80,65 +79,35 @@ export function AddProductDialog({ categories, onAddProduct }: AddProductDialogP
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="gap-2">
+                <Button className="bg-primary hover:bg-primary/90 text-white gap-2">
                     <Plus className="h-4 w-4" />
-                    Add Product
+                    New Product
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                    <DialogTitle>Add New Product</DialogTitle>
-                    <DialogDescription>
-                        Fill in the product details below. Click save when you&apos;re done.
-                    </DialogDescription>
+            <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden" showCloseButton={false}>
+                <DialogHeader className="px-6 py-4 border-b flex flex-row items-center justify-between">
+                    <DialogTitle className="text-lg font-semibold">Create Product</DialogTitle>
+                    <button
+                        onClick={() => setOpen(false)}
+                        className="text-red-500 hover:text-red-600"
+                    >
+                        <X className="h-5 w-5" />
+                    </button>
                 </DialogHeader>
+
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                        <FormField
-                            control={form.control}
-                            name="title"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Title *</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter product title" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
+                        {/* First Row - Dropdowns */}
                         <div className="grid grid-cols-2 gap-4">
-                            <FormField
-                                control={form.control}
-                                name="price"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Price *</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="number"
-                                                step="0.01"
-                                                min="0"
-                                                placeholder="0.00"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-
                             <FormField
                                 control={form.control}
                                 name="category"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Category *</FormLabel>
                                         <Select onValueChange={field.onChange} value={field.value}>
                                             <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Select category" />
+                                                <SelectTrigger className="h-10 border-gray-200">
+                                                    <SelectValue placeholder="Choose Category *" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
@@ -153,27 +122,79 @@ export function AddProductDialog({ categories, onAddProduct }: AddProductDialogP
                                     </FormItem>
                                 )}
                             />
+
+                            <FormField
+                                control={form.control}
+                                name="price"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input
+                                                type="number"
+                                                step="0.01"
+                                                min="0"
+                                                placeholder="Enter Price *"
+                                                className="h-10 border-gray-200"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </div>
 
+                        {/* Second Row - Title */}
                         <FormField
                             control={form.control}
-                            name="image"
+                            name="title"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Image URL (optional)</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="https://example.com/image.jpg" {...field} />
+                                        <Input
+                                            placeholder="Enter Product Title *"
+                                            className="h-10 border-gray-200"
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
 
-                        <div className="flex justify-end gap-3 pt-4">
-                            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-                                Cancel
+                        {/* Third Row - Image URL */}
+                        <FormField
+                            control={form.control}
+                            name="image"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Enter Image URL (optional)"
+                                            className="h-10 border-gray-200"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        {/* Footer Buttons */}
+                        <div className="flex justify-end gap-3 pt-4 border-t mt-6">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => {
+                                    form.reset();
+                                }}
+                                className="px-6"
+                            >
+                                Clear
                             </Button>
-                            <Button type="submit">Save Product</Button>
+                            <Button type="submit" className="px-6 bg-primary">
+                                Save
+                            </Button>
                         </div>
                     </form>
                 </Form>

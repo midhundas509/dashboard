@@ -86,7 +86,7 @@ export default function ProductsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <div className="flex flex-col items-center gap-4">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                     <p className="text-muted-foreground">Loading products...</p>
@@ -97,7 +97,7 @@ export default function ProductsPage() {
 
     if (error) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <div className="text-center">
                     <h2 className="text-xl font-semibold text-destructive mb-2">Error</h2>
                     <p className="text-muted-foreground">{error}</p>
@@ -107,28 +107,40 @@ export default function ProductsPage() {
     }
 
     return (
-        <div className="min-h-screen bg-muted/30">
+        <div className="min-h-screen bg-gray-50">
             {/* Header */}
-            <header className="bg-card border-b sticky top-0 z-10">
-                <div className="max-w-7xl mx-auto px-6 py-4">
-                    <div className="flex items-center justify-between">
+            <header className="bg-white border-b">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                         <div>
-                            <h1 className="text-2xl font-bold">Product Catalog</h1>
-                            <p className="text-sm text-muted-foreground">
-                                Manage and browse your product inventory
-                            </p>
+                            <div className="text-xs text-muted-foreground mb-1">
+                                Dashboard &gt; Products
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded bg-blue-100 flex items-center justify-center">
+                                    📦
+                                </div>
+                                <h1 className="text-xl font-bold">Product Catalog</h1>
+                            </div>
                         </div>
                         <AddProductDialog categories={categories} onAddProduct={handleAddProduct} />
                     </div>
                 </div>
             </header>
 
+            {/* View Toggle Tabs */}
+            <div className="bg-white border-b">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    <ViewToggle view={viewMode} onChange={setViewMode} />
+                </div>
+            </div>
+
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-6 py-6">
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
                 {/* Toolbar */}
-                <div className="bg-card rounded-lg border p-4 mb-6">
-                    <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-                        <div className="flex flex-col sm:flex-row gap-4 flex-1 w-full lg:w-auto">
+                <div className="bg-white rounded-lg border p-4 mb-4">
+                    <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                             <SearchInput value={searchQuery} onChange={setSearchQuery} />
                             <CategoryFilter
                                 categories={categories}
@@ -136,37 +148,16 @@ export default function ProductsPage() {
                                 onChange={setSelectedCategory}
                             />
                         </div>
-                        <div className="flex items-center gap-4">
-                            <ViewToggle view={viewMode} onChange={setViewMode} />
-                        </div>
-                    </div>
-                </div>
-
-                {/* Results info */}
-                <div className="flex items-center justify-between mb-4">
-                    <p className="text-sm text-muted-foreground">
-                        Showing {paginatedProducts.length} of {filteredProducts.length} products
-                    </p>
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={setCurrentPage}
-                    />
-                </div>
-
-                {/* Product List */}
-                <ProductList products={paginatedProducts} viewMode={viewMode} />
-
-                {/* Bottom Pagination */}
-                {totalPages > 1 && (
-                    <div className="flex justify-center mt-6">
                         <Pagination
                             currentPage={currentPage}
                             totalPages={totalPages}
                             onPageChange={setCurrentPage}
                         />
                     </div>
-                )}
+                </div>
+
+                {/* Product List */}
+                <ProductList products={paginatedProducts} viewMode={viewMode} />
             </main>
         </div>
     );
