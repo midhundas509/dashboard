@@ -97,7 +97,6 @@ export function AddProductDialog({ categories, onAddProduct }: AddProductDialogP
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
-                        {/* First Row - Dropdowns */}
                         <div className="grid grid-cols-2 gap-4">
                             <FormField
                                 control={form.control}
@@ -133,7 +132,7 @@ export function AddProductDialog({ categories, onAddProduct }: AddProductDialogP
                                                 type="number"
                                                 step="0.01"
                                                 min="0"
-                                                placeholder="Enter Price *"
+                                                placeholder="Enter Price"
                                                 className="h-10 border-gray-200"
                                                 {...field}
                                             />
@@ -152,7 +151,7 @@ export function AddProductDialog({ categories, onAddProduct }: AddProductDialogP
                                 <FormItem>
                                     <FormControl>
                                         <Input
-                                            placeholder="Enter Product Title *"
+                                            placeholder="Enter Product Title"
                                             className="h-10 border-gray-200"
                                             {...field}
                                         />
