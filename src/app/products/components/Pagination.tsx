@@ -6,18 +6,25 @@ interface PaginationProps {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
+    itemsPerPage: number;
+    onItemsPerPageChange: (value: number) => void;
+    itemsPerPageOptions: number[];
 }
 
-export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export function Pagination({ currentPage, totalPages, onPageChange, itemsPerPage, onItemsPerPageChange, itemsPerPageOptions }: PaginationProps) {
     if (totalPages <= 0) return null;
 
     return (
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-sm">
             <span className="hidden sm:inline text-muted-foreground">Items per page:</span>
-            <select className="h-8 px-2 border rounded-md bg-white text-sm">
-                <option>100</option>
-                <option>50</option>
-                <option>25</option>
+            <select
+                className="h-8 px-2 border rounded-md bg-white text-sm"
+                value={itemsPerPage}
+                onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
+            >
+                {itemsPerPageOptions.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                ))}
             </select>
 
             <span className="text-muted-foreground">

@@ -11,7 +11,7 @@ import { AddProductDialog } from './components/AddProductDialog';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { Loader2 } from 'lucide-react';
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE_OPTIONS = [4, 8, 12, 20];
 
 async function fetchProducts(): Promise<Product[]> {
     const response = await fetch('https://fakestoreapi.com/products');
@@ -31,6 +31,7 @@ export default function ProductsPage() {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [viewMode, setViewMode] = useState<ViewMode>('list');
     const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(8);
 
     // Fetch products on mount
     useEffect(() => {
@@ -53,7 +54,7 @@ export default function ProductsPage() {
     useEffect(() => {
         setCurrentPage(1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedSearch, selectedCategory]);
+    }, [debouncedSearch, selectedCategory, itemsPerPage]);
 
     // Derive categories from products
     const categories = useMemo(() => {
@@ -75,11 +76,11 @@ export default function ProductsPage() {
 
     // Paginate products
     const paginatedProducts = useMemo(() => {
-        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-        return filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-    }, [filteredProducts, currentPage]);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+    }, [filteredProducts, currentPage, itemsPerPage]);
 
-    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
     const handleAddProduct = (product: Product) => {
         setProducts((prev) => [product, ...prev]);
@@ -158,6 +159,9 @@ export default function ProductsPage() {
                                 currentPage={currentPage}
                                 totalPages={totalPages}
                                 onPageChange={setCurrentPage}
+                                itemsPerPage={itemsPerPage}
+                                onItemsPerPageChange={setItemsPerPage}
+                                itemsPerPageOptions={ITEMS_PER_PAGE_OPTIONS}
                             />
                         </div>
                     </div>
