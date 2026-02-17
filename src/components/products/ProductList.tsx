@@ -1,7 +1,7 @@
 'use client';
 
 import type { Product, ViewMode } from '@/types/product';
-import { ProductCard } from './ProductCard';
+import { ProductCard } from '@/components/products/ProductCard';
 import { PackageX } from 'lucide-react';
 
 interface ProductListProps {

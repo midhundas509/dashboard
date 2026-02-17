@@ -19,7 +19,6 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -34,7 +33,7 @@ import type { Product } from '@/types/product';
 
 const productSchema = z.object({
     title: z.string().min(1, 'Title is required').max(100, 'Title is too long'),
-    price: z.string().min(1, 'Price is required').refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+    price: z.string().min(1, 'Price is required').regex(/^\d+(\.\d+)?$/, {
         message: 'Price must be a positive number',
     }),
     category: z.string().min(1, 'Category is required'),
@@ -42,6 +41,8 @@ const productSchema = z.object({
 });
 
 type ProductFormData = z.infer<typeof productSchema>;
+
+let nextProductId = 1000;
 
 interface AddProductDialogProps {
     categories: string[];
@@ -63,7 +64,7 @@ export function AddProductDialog({ categories, onAddProduct }: AddProductDialogP
 
     const onSubmit = (data: ProductFormData) => {
         const newProduct: Product = {
-            id: Date.now(),
+            id: ++nextProductId,
             title: data.title,
             price: Number(data.price),
             category: data.category,

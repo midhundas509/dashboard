@@ -2,12 +2,12 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import type { Product, ViewMode } from '@/types/product';
-import { SearchInput } from './components/SearchInput';
-import { CategoryFilter } from './components/CategoryFilter';
-import { ViewToggle } from './components/ViewToggle';
-import { Pagination } from './components/Pagination';
-import { ProductList } from './components/ProductList';
-import { AddProductDialog } from './components/AddProductDialog';
+import { SearchInput } from '@/components/SearchInput';
+import { CategoryFilter } from '@/components/CategoryFilter';
+import { ViewToggle } from '@/components/ViewToggle';
+import { Pagination } from '@/components/Pagination';
+import { ProductList } from '@/components/products/ProductList';
+import { AddProductDialog } from '@/components/products/AddProductDialog';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { Loader2 } from 'lucide-react';
 
