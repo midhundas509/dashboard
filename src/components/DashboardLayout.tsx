@@ -43,9 +43,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Top Navbar */}
+         
             <nav className="fixed top-0 left-0 right-0 h-14 bg-[#1a1a2e] z-50 flex items-center px-4">
-                {/* Mobile menu button */}
+               
                 <button
                     className="lg:hidden text-white mr-4"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -53,13 +53,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
 
-                {/* Logo */}
+             
                 <div className="flex items-center gap-2 mr-8">
                     <span className="text-cyan-400 font-bold text-xl">B</span>
                     <span className="text-white font-bold text-lg hidden sm:inline">IGDAY</span>
                 </div>
 
-                {/* Search Bar */}
+               
                 <div className="flex-1 max-w-md mx-auto hidden sm:block">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -74,7 +74,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     </div>
                 </div>
 
-                {/* Right Icons */}
+             
                 <div className="flex items-center gap-2 ml-auto">
                     <button className="h-8 w-8 rounded-md bg-white/10 flex items-center justify-center text-white hover:bg-white/20">
                         <Plus className="h-4 w-4" />
@@ -95,12 +95,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 </div>
             </nav>
 
-            {/* Sidebar */}
+           
             <aside
                 className={`fixed top-14 left-0 bottom-0 w-56 bg-[#1e1e36] z-40 transform transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                     } lg:translate-x-0`}
             >
-                {/* User Profile */}
+                
                 <div className="p-4 border-b border-white/10">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-amber-600 flex items-center justify-center text-white font-medium">
@@ -116,7 +116,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     </div>
                 </div>
 
-                {/* Navigation */}
+                
                 <nav className="p-2 space-y-1">
                     {navItems.map((item) => {
                         const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
@@ -137,7 +137,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 </nav>
             </aside>
 
-            {/* Mobile sidebar overlay */}
+            
             {sidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-30 lg:hidden"
