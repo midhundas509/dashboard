@@ -19,7 +19,7 @@ export function ProductCard({ product }: ProductCardProps) {
                     </div>
                     <span className="font-medium text-sm">{product.title.split(' ').slice(0, 2).join(' ')}</span>
                 </div>
-                <span className={`px-3 py-1 text-xs font-medium rounded-full border ${statusColor.bg} ${statusColor.text} ${statusColor.border}`}>
+                <span className={`px-2 py-0.5 text-xs font-medium rounded-full border whitespace-nowrap ${statusColor.bg} ${statusColor.text} ${statusColor.border}`}>
                     {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
                 </span>
             </div>
