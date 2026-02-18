@@ -90,7 +90,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                         <Settings className="h-5 w-5" />
                     </button>
                     <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-medium ml-2">
-                        U
+                        K
                     </div>
                 </div>
             </nav>
