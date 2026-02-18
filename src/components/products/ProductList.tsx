@@ -2,22 +2,12 @@
 
 import type { Product, ViewMode } from '@/types/product';
 import { ProductCard } from '@/components/products/ProductCard';
+import { getCategoryColor } from '@/lib/categoryColors';
 import { PackageX } from 'lucide-react';
 
 interface ProductListProps {
     products: Product[];
     viewMode: ViewMode;
-}
-
-const STATUS_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-    "men's clothing": { bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-300' },
-    "women's clothing": { bg: 'bg-pink-50', text: 'text-pink-700', border: 'border-pink-300' },
-    "jewelery": { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-300' },
-    "electronics": { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-300' },
-};
-
-function getStatusColor(category: string) {
-    return STATUS_COLORS[category] || { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-300' };
 }
 
 function EmptyState() {
@@ -58,15 +48,15 @@ export function ProductList({ products, viewMode }: ProductListProps) {
                     <div className="col-span-1">
                         <input type="checkbox" className="rounded" />
                     </div>
-                    <div className="col-span-3">Name ↕</div>
-                    <div className="col-span-2">Category ↕</div>
-                    <div className="col-span-3">Description ↕</div>
-                    <div className="col-span-1">Price ↕</div>
-                    <div className="col-span-2">Status ↕</div>
+                    <div className="col-span-3">Name</div>
+                    <div className="col-span-2">Category</div>
+                    <div className="col-span-3">Description</div>
+                    <div className="col-span-1">Price</div>
+                    <div className="col-span-2">Status</div>
                 </div>
                 <div className="divide-y">
                     {products.map((product) => {
-                        const statusColor = getStatusColor(product.category);
+                        const statusColor = getCategoryColor(product.category);
                         return (
                             <div key={product.id} className="grid grid-cols-12 gap-4 px-4 py-3 items-center hover:bg-gray-50 text-sm">
                                 <div className="col-span-1">
@@ -95,7 +85,7 @@ export function ProductList({ products, viewMode }: ProductListProps) {
             {/* Mobile List - shown only on mobile */}
             <div className="md:hidden space-y-3">
                 {products.map((product) => {
-                    const statusColor = getStatusColor(product.category);
+                    const statusColor = getCategoryColor(product.category);
                     return (
                         <div key={product.id} className="bg-white rounded-lg border p-4">
                             <div className="flex items-start justify-between mb-2">
